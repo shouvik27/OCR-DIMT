@@ -11,56 +11,63 @@
 ## 📚 Project Structure
 
 ```
-
-├── evaluation/                       <- Evaluation pipeline (metrics, comparison, and quality assessment) [details coming soon]
+├── evaluation/                              <- Evaluation pipeline (metrics, scripts, coming soon)
 │
-├── reorder/                          <- Reading order extraction pipeline for document images
-│   ├── LayoutLMv3_T5/                    <- Baseline: LayoutLMv3 and T5-based scripts
-│   │   ├── __init__.py                     <- Makes this directory a Python package
-│   │   ├── collate.py                      <- Data collation utilities
-│   │   ├── config.py                       <- Configuration for the baseline
-│   │   ├── projection.py                   <- Projection and feature mapping scripts
-│   │   ├── train.py                        <- Training script for LayoutLMv3+T5
-│   │   └── inference.py                    <- Inference script for baseline
+├── reorder/                                 <- Reading order extraction pipeline
+│   ├── LayoutLMv3_T5/                           <- Baseline: LayoutLMv3 and T5-based methods
+│   │   ├── fine_tune/
+│   │   │   ├── data/                               <- Data loaders and utilities for fine-tuning
+│   │   │   │   ├── __init__.py                        <- Makes data a Python package
+│   │   │   │   ├── dataset.py                         <- Custom dataset definition
+│   │   │   │   ├── ndjson_reader.py                   <- NDJSON reader utility
+│   │   │   ├── __init__.py                        <- Makes fine_tune a Python package
+│   │   │   ├── collate.py                         <- Data collation and batch functions
+│   │   │   ├── config.py                          <- Fine-tuning configuration for baseline
+│   │   │   ├── projection.py                      <- Projection/feature engineering utilities
+│   │   │   ├── train.py                           <- Fine-tuning script for LayoutLMv3_T5
+│   │   ├── inference/
+│   │   │   ├── __init__.py                        <- Makes inference a Python package
+│   │   │   └── inference.py                       <- Inference script for LayoutLMv3_T5
 │   │
-│   ├── Llama_4_Maverick/                   <- Llama 4 Maverick pipeline (LLM-based reading order extraction)
-│   │   ├── fine_tune/                          <- Scripts and modules for fine-tuning with Llama 4 Maverick
-│   │   │   ├── __init__.py                       <- Makes this directory a Python package
-│   │   │   ├── config.py                          <- Fine-tune pipeline configuration
-│   │   │   ├── examples.py                        <- Few-shot and training examples
-│   │   │   ├── ocr_client.py                      <- Llama 4 Maverick model client and interface
-│   │   │   ├── process.py                         <- Data and batch processing utilities
-│   │   │   └── train.py                           <- Fine-tuning script
-│   │   └── inference/                             <- Inference modules for Llama 4 Maverick
-│   │       ├── __init__.py                        <- Makes this directory a Python package
-│   │       ├── config.py                          <- Inference pipeline configuration
-│   │       ├── examples.py                        <- Few-shot examples for inference
-│   │       ├── inference.py                       <- Inference script
-│   │       ├── ocr_client.py                      <- Model client for inference
-│   │       └── process.py                         <- Processing and result aggregation scripts
+│   ├── Llama_4_Maverick/                          <- Llama 4 Maverick (LLM-based) reorder pipeline
+│   │   ├── fine_tune/
+│   │   │   ├── __init__.py                        <- Makes fine_tune a Python package
+│   │   │   └── train.py                           <- Fine-tuning script for Llama 4 Maverick
+│   │   ├── inference/
+│   │   │   ├── __init__.py                        <- Makes inference a Python package
+│   │   │   └── inference.py                       <- Inference script for Llama 4 Maverick
+│   │   ├── .env                                  <- Environment variables for this pipeline
+│   │   ├── config.py                             <- Pipeline configuration (inference/fine-tune)
+│   │   ├── examples.py                           <- Few-shot examples for inference/fine-tune
+│   │   ├── image_utils.py                        <- Image loading/base64 utilities
+│   │   ├── inference.py                          <- Inference entry point (script)
+│   │   ├── ocr_client.py                         <- Model client interface for Llama 4 Maverick
+│   │   └── process.py                            <- Processing and batch utilities
 │   │
-│   └── Pixtral/                              <- Pixtral (Mistral) LLM-based reorder pipeline
-│       ├── fine_tune/                            <- Fine-tuning utilities and scripts for Pixtral
-│       │   ├── __init__.py                           <- Makes this directory a Python package
-│       │   ├── config.py                              <- Fine-tuning configuration for Pixtral
-│       │   ├── examples.py                            <- Training/few-shot examples for Pixtral
-│       │   ├── image_utils.py                          <- Image conversion and base64 utilities
-│       │   ├── ocr_client.py                           <- Pixtral model client
-│       │   ├── process.py                              <- Data prep and batch processing
-│       │   └── train.py                                <- Fine-tuning script
-│       └── inference/                              <- Inference utilities for Pixtral
-│           ├── __init__.py                           <- Makes this directory a Python package
-│           ├── config.py                              <- Inference configuration for Pixtral
-│           ├── examples.py                            <- Few-shot examples for inference
-│           ├── image_utils.py                         <- Image conversion and base64 utilities
-│           ├── inference.py                           <- Main inference script
-│           ├── ocr_client.py                          <- Model client for inference
-│           └── process.py                             <- Processing and aggregation scripts
+│   └── Pixtral/                                 <- Pixtral (Mistral LLM-based) reorder pipeline
+│       ├── fine_tune/
+│       │   ├── __init__.py                        <- Makes fine_tune a Python package
+│       │   ├── .env                               <- Environment variables for fine-tuning
+│       │   ├── config.py                          <- Fine-tuning configuration
+│       │   ├── data_prep.py                       <- Data preparation and formatting utilities
+│       │   ├── examples.py                        <- Few-shot/training examples for Pixtral
+│       │   ├── fine_tune.py                       <- Fine-tuning script for Pixtral
+│       │   ├── image_utils.py                     <- Image conversion/base64 utilities
+│       │   ├── ocr_client.py                      <- Pixtral model client
+│       │   └── train.py                           <- Training orchestration script
+│       ├── inference/
+│       │   ├── __init__.py                        <- Makes inference a Python package
+│       │   ├── config.py                          <- Inference configuration for Pixtral
+│       │   ├── examples.py                        <- Few-shot examples for inference
+│       │   ├── image_utils.py                     <- Image utilities for inference
+│       │   ├── inference.py                       <- Inference entry point for Pixtral
+│       │   ├── ocr_client.py                      <- Model client for inference
+│       │   └── process.py                         <- Processing and aggregation scripts
 │
-├── translation/                      <- Translation pipeline (machine translation and post-processing) [details coming soon]
+├── translation/                             <- Translation pipeline (machine translation and post-processing, coming soon)
 │
-├── main.py                           <- Main project orchestration script
-├── pixtral_training_data.jsonl        <- Example Pixtral fine-tuning data (JSONL)
-└── README.md                         <- Project documentation
+├── main.py                                  <- Main orchestration script for the project
+├── pixtral_training_data.jsonl               <- Example training data for Pixtral (JSONL format)
+└── README.md                                <- Project documentation
 
 ```
