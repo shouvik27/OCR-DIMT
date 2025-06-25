@@ -10,9 +10,9 @@ def main():
 
     if model == "LayoutLMv3_T5":
         if action == "finetune":
-            from reorder.LayoutLMv3_T5.fine_tune.train import start_execution
+            from LayoutLMv3_T5.fine_tune.train import start_execution
         elif action == "inference":
-            from reorder.LayoutLMv3_T5.inference import start_execution
+            from LayoutLMv3_T5.inference import start_execution
         else:
             print("Action must be 'finetune' or 'inference'")
             return
